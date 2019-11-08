@@ -6,10 +6,10 @@ ifeq ($(CFLAGS),)
 CFLAGS := -fopenmp
 endif
 
-all: nested
+all: affinity
 
-nested: nested.c
-	$(CC) $(CFLAGS) -std=c99 -o nested nested.c
+affinity: affinity.c
+	$(CC) $(CFLAGS) -std=c99 -o affinity affinity.c
 
 clean:
-	rm -f nested
+	rm -f affinity
