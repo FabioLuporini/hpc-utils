@@ -24,8 +24,9 @@ int main(int argc, char* argv[])
   omp_set_dynamic(0);
 
   // To do some computation
-  int array_fst[num_threads_fst];
-  int array_snd[num_threads_snd];
+  const int padding = 10000;
+  int array_fst[num_threads_fst][padding];
+  int array_snd[num_threads_snd][padding];
 
   // Timers
   struct timeval start, end;
@@ -39,13 +40,13 @@ int main(int argc, char* argv[])
     #pragma omp parallel for num_threads(num_threads_fst)
     for (int i = 0; i < num_threads_fst; i++)
     {
-      array_fst[i] = num_threads_fst*num_threads_snd;
+      array_fst[i][0] = num_threads_fst*num_threads_snd;
     }
 
     #pragma omp parallel for num_threads(num_threads_snd)
     for (int i = 0; i < num_threads_snd; i++)
     {
-      array_snd[i] = num_threads_fst*num_threads_snd;
+      array_snd[i][0] = num_threads_fst*num_threads_snd;
     }
   }
   gettimeofday(&end, NULL);
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
   {
     for (int j = 0; j < num_threads_snd; j++)
     {
-      sum += array_fst[i] + array_snd[j];
+      sum += array_fst[i][0] + array_snd[j][0];
     }
   }
 
