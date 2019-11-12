@@ -8,7 +8,7 @@ CC=icc CFLAGS=-qopenmp make clean nested
 
 With nested parallelism:
 ```
-OMP_PLACES=threads OMP_PROC_BIND=spread,close KMP_HOT_TEAMS_MODE=1 KMP_HOT_TEAMS_MAX_LEVEL=2 KMP_BLOCKTIME=infinite ./nested 64 2
+OMP_PLACES=threads OMP_PROC_BIND=spread,close KMP_HOT_TEAMS_MODE=1 KMP_HOT_TEAMS_MAX_LEVEL=2 ./nested 64 2
 ```
 
 Without nested parallelism:
