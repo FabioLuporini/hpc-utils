@@ -45,20 +45,13 @@ int main(int argc, char* argv[])
   for (int n = 0; n < nsteps; n++)
   {
     int i;
-    #pragma omp parallel num_threads(num_threads_outer) firstprivate(i)
+    #pragma omp parallel for num_threads(num_threads_outer) firstprivate(i)
+    for (i = 0; i < num_threads_outer; i++)
     {
-      #pragma omp for nowait
-      for (i = 0; i < num_threads_outer; i++)
+      #pragma omp parallel for num_threads(num_threads_inner)
+      for (int j = 0; j < num_threads_inner; j++)
       {
-        int j;
-        #pragma omp parallel num_threads(num_threads_inner) firstprivate(j)
-        {
-          #pragma omp for nowait
-          for (j = 0; j < num_threads_inner; j++)
-          {
-            matrix[i][j][0] = num_threads_outer*num_threads_inner;
-          }
-        }
+        matrix[i][j][0] = num_threads_outer*num_threads_inner;
       }
     }
   }
